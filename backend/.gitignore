@@ -1,1 +1,35 @@
+# Ignore les fichiers Python compilés et caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore les dossiers de virtual environment
 venv/
+env/
+
+# Ignore la base de données SQLite (si utilisée)
+*.sqlite3
+*.db
+
+# Ignore les fichiers de logs et les rapports d'erreurs
+logs/
+*.log
+
+# Ignore les fichiers de migrations
+migrations/
+
+# Ignore les fichiers temporaires de l'IDE
+.vscode/
+
+# Ignore les fichiers sensibles (variables d'environnement)
+.env
+*.env
+
+# Ignore les fichiers créés par Django
+staticfiles/
+media/
+
+# Ignore les dépendances installées via pip freeze (si requirements.txt)
+pip-log.txt
+pip-delete-this-directory.txt
