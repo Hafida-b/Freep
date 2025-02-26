@@ -9,14 +9,20 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError("L'utilisateur doit avoir une adresse email")
         email = self.normalize_email(email)
+        extra_fields.setdefault("is_active", True)
         user = self.model(email=email, **extra_fields)
-        user.set_password(password)
+        user.set_password(password)  # Hachage du mot de passe
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_staff", True)  # S'assurer que is_staff est True
+        extra_fields.setdefault("is_superuser", True)  # S'assurer que is_superuser est True
+
+        # La condition suivante garantit que l'utilisateur superuser aura un mot de passe haché
+        if password is None:
+            raise ValueError("Le mot de passe ne peut pas être vide pour un super utilisateur")
+
         return self.create_user(email, password, **extra_fields)
 
 
@@ -29,11 +35,20 @@ class User(AbstractBaseUser):
     # Champs Django obligatoires
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    def has_perm(self, perm, obj=None):
+        """Retourne True si l'utilisateur a une permission spécifique."""
+        return self.is_superuser
+
+    def has_module_perms(self, app_label):
+        """Retourne True si l'utilisateur a les permissions pour voir l'application `app_label`."""
+        return self.is_superuser
 
     def __str__(self):
         return self.email if self.email else "Utilisateur sans email"
