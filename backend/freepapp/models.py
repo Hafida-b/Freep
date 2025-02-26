@@ -10,13 +10,18 @@ class UserManager(BaseUserManager):
             raise ValueError("L'utilisateur doit avoir une adresse email")
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
-        user.set_password(password)
+        user.set_password(password)  # Hachage du mot de passe
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_staff", True)  # S'assurer que is_staff est True
+        extra_fields.setdefault("is_superuser", True)  # S'assurer que is_superuser est True
+
+        # La condition suivante garantit que l'utilisateur superuser aura un mot de passe haché
+        if password is None:
+            raise ValueError("Le mot de passe ne peut pas être vide pour un super utilisateur")
+
         return self.create_user(email, password, **extra_fields)
 
 
