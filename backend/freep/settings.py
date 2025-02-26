@@ -14,9 +14,10 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
+import os
+from dotenv import load_dotenv
 
 load_dotenv()
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders'
+
 ]
 
 MIDDLEWARE = [
@@ -58,6 +60,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ALLOW_CREDENTIALS = True  # Autorise l'envoi de cookies et d'authentifications
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Autorise React
 ]
 
 ROOT_URLCONF = 'freep.urls'
@@ -95,6 +102,8 @@ DATABASES = {
     }
 }
 
+# print("DB name:", os.environ.get('DB_NAME'))
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -113,6 +122,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = "freepapp.User"
 
 
 # Internationalization
