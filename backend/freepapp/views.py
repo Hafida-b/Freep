@@ -1,32 +1,42 @@
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login, logout
+from rest_framework.decorators import api_view, permission_classes
+from django.contrib.auth import authenticate
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, login_required
 from django.contrib.auth.models import User
-from django.contrib.sessions.models import Session
+from rest_framework_simplejwt.tokens import RefreshToken
 
 # Create your views here.
 def index(request):
     return HttpResponse("Bienvenue sur l'application Freep !")
 
-# Authentification view    
+# Create JWT token
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),   # Refresh token
+        'access': str(refresh.access_token),  # Access token
+    }
+
+# Authentification and generation of JWT    
 @api_view(['POST'])
 def authenticate_user(request):
     email = request.data.get('email')
     password = request.data.get('password')
     
-    # Check if the user exists
+    # Checks if the user exists
     user = authenticate(request, username=email, password=password)
     
     if user is not None:
-        login(request, user) 
-        return Response({'message': 'Vous êtes connecté.e'}, status=200)
+        tokens = get_tokens_for_user(user)
+        return Response({'message': 'Connexion réussie', 'tokens': tokens}, status=200)
     else:
         return Response({'error': 'Email ou mot de passe incorrect'}, status=401)
 
-# Get user from session
+# Get user info from JWT
 @api_view(['GET'])
-@login_required  # Checks if the user is signed in before answering
+@permission_classes([IsAuthenticated]) # Checks if the user is signed in
+
 def get_user(request):
     user = request.user  
     return Response({'user': {'email': user.email, 'username': user.username}}, status=200)
@@ -34,5 +44,4 @@ def get_user(request):
 # Logout user
 @api_view(['POST'])
 def logout_user(request):
-    logout(request)  # Django deletes the session automatically
-    return Response({'message': 'Vous êtes déconnecté.e'}, status=200)
+    return Response({'message': 'Déconnexion réussie'}, status=200)
