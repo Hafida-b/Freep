@@ -14,7 +14,7 @@ from freepapp.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/create_article/", create_article, name="create_article"),
-    path('', views.index, name='index'),
+    # path('', views.index, name='index'),
     # Routes pour User
     path('users/', UserListCreateView.as_view(), name='user-list-create'),
     path('users/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
