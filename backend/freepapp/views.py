@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view
 from .serializers import UserSerializer
 
 @api_view(['POST'])
-def register_user(request):
+def create_user(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
