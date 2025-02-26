@@ -1,9 +1,10 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 from django.shortcuts import get_object_or_404
-from .models import Clothing, Picture, Session
-from .serializers import ClothingSerializer
+from .models import User, Clothing, Picture, Session
+from .serializers import UserSerializer, SessionSerializer, ClothingSerializer, PictureSerializer
+from django.http import HttpResponse
 
 @api_view(["POST"])
 def create_article(request):
@@ -44,3 +45,41 @@ def create_article(request):
         Picture.objects.create(clothing=clothing, url=image_url)
 
     return Response({"message": "Article créé avec succès"}, status=status.HTTP_201_CREATED)
+
+def index(request):
+    return HttpResponse("Bienvenue chez Freep")
+# Vues pour User
+class UserListCreateView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+# Vues pour Session
+class SessionListCreateView(generics.ListCreateAPIView):
+    queryset = Session.objects.all()
+    serializer_class = SessionSerializer
+
+class SessionDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Session.objects.all()
+    serializer_class = SessionSerializer
+
+# Vues pour Clothing
+class ClothingListCreateView(generics.ListCreateAPIView):
+    queryset = Clothing.objects.all()
+    serializer_class = ClothingSerializer
+
+class ClothingDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Clothing.objects.all()
+    serializer_class = ClothingSerializer
+
+# Vues pour Picture
+class PictureListCreateView(generics.ListCreateAPIView):
+    queryset = Picture.objects.all()
+    serializer_class = PictureSerializer
+
+class PictureDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Picture.objects.all()
+    serializer_class = PictureSerializer
