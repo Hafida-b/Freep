@@ -49,6 +49,66 @@ def create_article(request):
 
     return Response({"message": "Article créé avec succès"}, status=status.HTTP_201_CREATED)
 
+@api_view(["DELETE"])
+def delete_article(request, article_id):
+    """
+    API pour supprimer un article (vêtement) à partir de son ID.
+    """
+    try:
+        # Récupérer l'article via l'ID
+        clothing = Clothing.objects.get(id=article_id)
+
+        # Supprimer l'article
+        clothing.delete()
+
+        return Response({"message": "Article supprimé avec succès"}, status=200)
+
+    except Clothing.DoesNotExist:
+        return Response({"message": "Article non trouvé"}, status=404)
+
+
+@api_view(["PUT"])  # On utilise PUT pour la mise à jour
+def update_article(request, article_id):
+    """
+    API pour mettre à jour un article (vêtement) à partir de son ID.
+    """
+    # Essayer de récupérer l'article avec l'ID donné
+    try:
+        clothing = Clothing.objects.get(id=article_id)
+    except Clothing.DoesNotExist:
+        return Response({"message": "Article non trouvé"}, status=status.HTTP_404_NOT_FOUND)
+
+    # Extraire les données envoyées dans la requête
+    data = request.data
+    name = data.get("name", clothing.name)  # Si la donnée n'est pas présente, on garde l'ancienne
+    desc = data.get("desc", clothing.description)
+    type_ = data.get("type", clothing.type)
+    size = data.get("size", clothing.size)
+    gender = data.get("gender", clothing.genders)
+    state = data.get("state", clothing.state)
+    image_url = data.get("image", None)
+
+    # Mettre à jour l'article avec les nouvelles données
+    clothing.name = name
+    clothing.description = desc
+    clothing.type = type_
+    clothing.size = size
+    clothing.genders = gender
+    clothing.state = state
+
+    # Sauvegarder les changements
+    clothing.save()
+
+    # Si une nouvelle image est fournie, on la met à jour aussi
+    if image_url:
+        # Si l'article a déjà une image associée, on peut soit la supprimer soit la mettre à jour
+        picture = clothing.pictures.first()  # Prendre la première image liée à l'article
+        if picture:
+            picture.url = image_url
+            picture.save()
+        else:
+            # Si aucune image n'existe encore, on en crée une nouvelle
+            Picture.objects.create(clothing=clothing, url=image_url)
 
 @api_view(["GET"])
 def list_articles(request):
@@ -59,6 +119,7 @@ def list_articles(request):
     serializer = ClothingSerializer(articles, many=True)
     print("data :", serializer.data)
     return Response({"clothingList": serializer.data}, status=status.HTTP_200_OK)
+
 
 def index(request):
     return HttpResponse("Bienvenue chez Freep")

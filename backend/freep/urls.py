@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.urls import path
-from freepapp.views import create_article
+from freepapp.views import create_article, delete_article, update_article
 from django.shortcuts import redirect
-
 from freepapp.views import (
     UserListCreateView, UserDetailView,
     SessionListCreateView, SessionDetailView,
@@ -14,6 +13,9 @@ urlpatterns = [
     path('', lambda request: redirect('/admin/')),
     path('admin/', admin.site.urls),
     path("api/create_article/", create_article, name="create_article"),
+    path('api/delete_article/<int:article_id>/', delete_article, name='delete_article'),
+    path('api/update_article/<int:article_id>/', update_article, name='update_article'),
+    # path('', views.index, name='index'),
     # Routes pour User
     path('users/', UserListCreateView.as_view(), name='user-list-create'),
     path('users/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
