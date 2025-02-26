@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'freepapp.apps.FreepappConfig'
+    'freepapp.apps.FreepappConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
