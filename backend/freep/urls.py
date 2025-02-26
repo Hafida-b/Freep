@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
-from freepapp import views
+from freepapp.views import create_article
+
 
 
 from freepapp.views import (
@@ -12,6 +13,7 @@ from freepapp.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api/create_article/", create_article, name="create_article"),
     path('', views.index, name='index'),
     # Routes pour User
     path('users/', UserListCreateView.as_view(), name='user-list-create'),
