@@ -7,7 +7,7 @@ from freepapp.views import (
     UserListCreateView, UserDetailView,
     SessionListCreateView, SessionDetailView,
     ClothingListCreateView, ClothingDetailView,
-    PictureListCreateView, PictureDetailView
+    PictureListCreateView, PictureDetailView , 
 )
 
 urlpatterns = [
@@ -23,10 +23,10 @@ urlpatterns = [
     path('sessions/<int:pk>/', SessionDetailView.as_view(), name='session-detail'),
 
     # Routes pour Clothing
-    path('clothing/', ClothingListCreateView.as_view(), name='clothing-list-create'),
+    path('api/list_articles/', ClothingListCreateView.as_view(), name='clothing-list-create'),
     path('clothing/<int:pk>/', ClothingDetailView.as_view(), name='clothing-detail'),
-
-    # Routes pour Picture
+   # Routes pour Picture
     path('pictures/', PictureListCreateView.as_view(), name='picture-list-create'),
     path('pictures/<int:pk>/', PictureDetailView.as_view(), name='picture-detail'),
+
 ]

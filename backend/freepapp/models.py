@@ -28,7 +28,7 @@ class UserManager(BaseUserManager):
 
 # Modèle User
 class User(AbstractBaseUser):
-    full_name = models.CharField(max_length=255, blank=True, null=True)
+    full_name = models.CharField(unique=True ,max_length=255, blank=True, null=True)
     email = models.EmailField(unique=True, blank=True, null=True)
     password = models.CharField(max_length=255, blank=True, null=True)
     
@@ -51,7 +51,7 @@ class User(AbstractBaseUser):
         return self.is_superuser
 
     def __str__(self):
-        return self.email if self.email else "Utilisateur sans email"
+        return self.full_name if self.full_name else self.email
 
 # Modèle Session
 class Session(models.Model):

@@ -5,6 +5,9 @@ from django.shortcuts import get_object_or_404
 from .models import User, Clothing, Picture, Session
 from .serializers import UserSerializer, SessionSerializer, ClothingSerializer, PictureSerializer
 from django.http import HttpResponse
+from rest_framework import status
+from .models import Clothing
+from .serializers import ClothingSerializer
 
 @api_view(["POST"])
 def create_article(request):
@@ -46,8 +49,20 @@ def create_article(request):
 
     return Response({"message": "Article créé avec succès"}, status=status.HTTP_201_CREATED)
 
+
+@api_view(["GET"])
+def list_articles(request):
+    """
+    API pour récupérer la liste des articles
+    """
+    articles = Clothing.objects.all()
+    serializer = ClothingSerializer(articles, many=True)
+    print("data :", serializer.data)
+    return Response({"clothingList": serializer.data}, status=status.HTTP_200_OK)
+
 def index(request):
     return HttpResponse("Bienvenue chez Freep")
+
 # Vues pour User
 class UserListCreateView(generics.ListCreateAPIView):
     queryset = User.objects.all()
@@ -83,3 +98,9 @@ class PictureListCreateView(generics.ListCreateAPIView):
 class PictureDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Picture.objects.all()
     serializer_class = PictureSerializer
+
+
+class ClothingListCreateView(generics.ListCreateAPIView):
+   
+    queryset = Clothing.objects.all()
+    serializer_class = ClothingSerializer
