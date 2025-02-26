@@ -33,3 +33,5 @@ media/
 # Ignore les dépendances installées via pip freeze (si requirements.txt)
 pip-log.txt
 pip-delete-this-directory.txt
+
+.DS_Store
