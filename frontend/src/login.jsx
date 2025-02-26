@@ -18,7 +18,7 @@ const Login = () => {
   return (
     <div>
       {user ? (
-        <p>Bienvenue, {user.username} !</p>
+        <p>Bienvenue {user.username} !</p>
       ) : (
         <form onSubmit={handleLogin}>
           <input

@@ -32,7 +32,7 @@ export const refreshToken = async (refreshToken) => {
 
 // Fonction pour récupérer les infos utilisateur
 export const getUserInfo = async (accessToken) => {
-  const response = await fetch(`${API_URL}/api/user/`, {
+  const response = await fetch(`${API_URL}/auth/get_user/`, {
     method: "GET",
     headers: { Authorization: `Bearer ${accessToken}` },
   });

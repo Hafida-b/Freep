@@ -39,7 +39,7 @@ def authenticate_user(request):
 
 def get_user(request):
     user = request.user  
-    return Response({'user': {'email': user.email, 'username': user.username}}, status=200)
+    return Response({'user': {'email': user.email}}, status=200)
 
 # Logout user
 @api_view(['POST'])
