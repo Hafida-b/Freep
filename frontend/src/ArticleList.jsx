@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 const ArticleList = () => {
-  const [clothingList, setClothingList] = useState([]);
+  const [clothingList, setClothingList] = useState(null);
   const [type, setType] = useState("");
   const [size, setSize] = useState("");
   const [genders, setGenders] = useState("");
@@ -22,20 +22,23 @@ const ArticleList = () => {
     });
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/list_articles/?${queryParams}`, {
-        method: "GET",
-        credentials : "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/list_articles/?${queryParams}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Erreur lors de la récupération des articles');
+        throw new Error("Erreur lors de la récupération des articles");
       }
 
       const data = await response.json();
-      setClothingList(data.clothingList);
+      setClothingList(data);
       setTotalPages(data.totalPages);
       setError(""); // Réinitialiser l'erreur en cas de succès
     } catch (error) {
@@ -63,9 +66,8 @@ const ArticleList = () => {
   return (
     <div>
       <h1>Liste des articles</h1>
-
-      {error && <div style={{ color: 'red' }}>{error}</div>} {/* Affichage de l'erreur */}
-
+      {error && <div style={{ color: "red" }}>{error}</div>}{" "}
+      {/* Affichage de l'erreur */}
       <label>
         Type :
         <select value={type} onChange={(e) => setType(e.target.value)}>
@@ -78,7 +80,6 @@ const ArticleList = () => {
           <option value="Vêtements de sport">Vêtements de sport</option>
         </select>
       </label>
-
       <label>
         Taille :
         <select value={size} onChange={(e) => setSize(e.target.value)}>
@@ -91,7 +92,6 @@ const ArticleList = () => {
           <option value="XXL">XXL</option>
         </select>
       </label>
-
       <label>
         Genre :
         <select value={genders} onChange={(e) => setGenders(e.target.value)}>
@@ -101,7 +101,6 @@ const ArticleList = () => {
           <option value="Unisex">Unisexe</option>
         </select>
       </label>
-
       <label>
         État :
         <select value={state} onChange={(e) => setState(e.target.value)}>
@@ -114,7 +113,6 @@ const ArticleList = () => {
           <option value="Abimé">Abimé</option>
         </select>
       </label>
-
       <table>
         <thead>
           <tr>
@@ -129,19 +127,20 @@ const ArticleList = () => {
           </tr>
         </thead>
         <tbody>
-        {Array.isArray(clothingList) && clothingList.length > 0 ? (
+          {Array.isArray(clothingList) && clothingList.length > 0 ? (
             clothingList.map((clothing) => (
-            <tr key={clothing.id}>
+              <tr key={clothing.id}>
                 <td>
-                {Array.isArray(clothing.pictures) && clothing.pictures.map((picture) => (
-                    <img
-                    key={picture.id}
-                    src={picture.url}
-                    alt={clothing.name}
-                    width="100"
-                    height="100"
-                    />
-                ))}
+                  {Array.isArray(clothing.pictures) &&
+                    clothing.pictures.map((picture) => (
+                      <img
+                        key={picture.id}
+                        src={picture.url}
+                        alt={clothing.name}
+                        width="100"
+                        height="100"
+                      />
+                    ))}
                 </td>
                 <td>{clothing.name}</td>
                 <td>{clothing.description}</td>
@@ -149,21 +148,26 @@ const ArticleList = () => {
                 <td>{clothing.size}</td>
                 <td>{clothing.genders}</td>
                 <td>{clothing.state}</td>
-                <td>{clothing.user.full_name}</td>
-            </tr>
+                {clothing.user ? <td>{clothing.user.full_name}</td> : null}
+              </tr>
             ))
-        ) : (
+          ) : (
             <tr>
-            <td colSpan="8">Aucun article trouvé.</td>
+              <td colSpan="8">Aucun article trouvé.</td>
             </tr>
-        )}
+          )}
         </tbody>
       </table>
-
       <div>
-        <button disabled={currentPage === 1} onClick={prevPage}>Précédent</button>
-        <span>Page {currentPage} sur {totalPages}</span>
-        <button disabled={currentPage === totalPages} onClick={nextPage}>Suivant</button>
+        <button disabled={currentPage === 1} onClick={prevPage}>
+          Précédent
+        </button>
+        <span>
+          Page {currentPage} sur {totalPages}
+        </span>
+        <button disabled={currentPage === totalPages} onClick={nextPage}>
+          Suivant
+        </button>
       </div>
     </div>
   );
