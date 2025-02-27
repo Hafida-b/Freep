@@ -6,7 +6,7 @@ from freepapp.views import (
     UserListCreateView, UserDetailView,
     SessionListCreateView, SessionDetailView,
     ClothingListCreateView, ClothingDetailView,
-    PictureListCreateView, PictureDetailView,
+    PictureListCreateView, PictureDetailView, create_user,
     authenticate_user, get_user, logout_user,
     create_article, delete_article, update_article
 )
@@ -16,6 +16,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # Authentification
+    path('api/create_user/', create_user, name='register'),
     path('auth/authenticate_user/', authenticate_user, name='authenticate_user'),
     path('auth/get_user/', get_user, name='get_user'),
     path('auth/logout/', logout_user, name='logout_user'),
