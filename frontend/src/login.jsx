@@ -5,12 +5,16 @@ const Login = () => {
   const { login, user } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
+
     try {
       await login(email, password);
     } catch (error) {
+      setErrorMessage(error.message);
       console.error("Échec de connexion :", error);
     }
   };
@@ -34,6 +38,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">Se connecter</button>
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         </form>
       )}
     </div>
