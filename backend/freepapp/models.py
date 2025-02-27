@@ -63,13 +63,47 @@ class Session(models.Model):
 
 # Modèle Clothing
 class Clothing(models.Model):
+    TYPES_CHOICES = [
+        ("Hauts", "Haut"),
+        ("Accessoires", "Accessoires"),
+        ("Bas", "Bas"), 
+        ("Vêtements de soirée", "Vêtements de soirée"), 
+        ("Déguisement","Déguisement"),
+        ("Vêtements de sport","Vêtements de sport")
+    ]
+
+    SIZE_CHOICES = [
+        ('s', 'Small'),
+        ('m', 'Medium'),
+        ('l', 'Large'),
+        ('xl', 'Extra Large'),
+    ]
+
+    GENDER_CHOICES = [
+        ('Homme', 'Homme'),
+        ('Femme', 'Femme'),
+        ('Unisexe', 'Unisexe'),
+    ]
+
+    STATE_CHOICES = [
+        ('Neuf', 'Neuf'),
+        ('Comme Neuf', 'Comme Neuf'),
+        ('Très bon état', 'Très bon état'),
+        ('Bon état', 'Bon état'),
+        ('Usé', 'Usé'),
+        ('Abimé', 'Abimé'),
+    ]
+    
+    
+    
     name = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    type = models.CharField(max_length=100, blank=True, null=True)
-    size = models.CharField(max_length=50, blank=True, null=True)
-    genders = models.CharField(max_length=50, blank=True, null=True)
-    state = models.CharField(max_length=50, blank=True, null=True)
+    type = models.CharField(max_length=100,choices=TYPES_CHOICES,  blank=True, null=True)
+    size = models.CharField(max_length=50, choices=SIZE_CHOICES, blank=True, null=True)
+    genders = models.CharField(max_length=50, choices=GENDER_CHOICES, blank=True, null=True)
+    state = models.CharField(max_length=50, choices=STATE_CHOICES,blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="dressing", blank=True, null=True)
+    
 
     def __str__(self):
         return self.name if self.name else f"Vêtement #{self.id}"
