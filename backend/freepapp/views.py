@@ -7,7 +7,6 @@ from .serializers import UserSerializer, SessionSerializer, ClothingSerializer, 
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 from .models import Clothing
