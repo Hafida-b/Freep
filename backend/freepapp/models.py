@@ -73,10 +73,10 @@ class Clothing(models.Model):
     ]
 
     SIZE_CHOICES = [
-        ('s', 'Small'),
-        ('m', 'Medium'),
-        ('l', 'Large'),
-        ('xl', 'Extra Large'),
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+        ('XL', 'Extra Large'),
     ]
 
     GENDER_CHOICES = [
