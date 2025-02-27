@@ -75,6 +75,8 @@ button:focus-visible {
 table {
   width: 100%; 
   border-collapse: collapse; 
+  border-radius: 50px;
+  border: 2px solid #8d15a0e0;
 }
 
 th, td {

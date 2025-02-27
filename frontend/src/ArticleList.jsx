@@ -113,6 +113,9 @@ const ArticleList = () => {
           <option value="Abimé">Abimé</option>
         </select>
       </label>
+
+      <br/> 
+      
       <table>
         <thead>
           <tr>
@@ -158,6 +161,7 @@ const ArticleList = () => {
           )}
         </tbody>
       </table>
+      <br/>
       <div>
         <button disabled={currentPage === 1} onClick={prevPage}>
           Précédent
