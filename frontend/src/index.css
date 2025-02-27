@@ -13,6 +13,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -66,3 +71,24 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+table {
+  width: 100%; 
+  border-collapse: collapse; 
+}
+
+th, td {
+  border: 1px solid #dddddd; /* Bordure grise autour des cellules */
+  text-align: center;
+  padding: 8px;
+}
+
+th {
+  background-color: #8d15a0e0; 
+  font-weight: bold; 
+}
+
+tr {
+  text-align: center;
+}
+
