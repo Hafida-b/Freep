@@ -59,7 +59,6 @@ const CreateArticle = () => {
           <label>
             Type :
             <select name="type" value={formData.type} onChange={handleChange}>
-              <option value="">Tous</option>
               <option value="Hauts">Hauts</option>
               <option value="Accessoires">Accessoires</option>
               <option value="Bas">Bas</option>
@@ -74,7 +73,6 @@ const CreateArticle = () => {
           <label>
             Taille :
             <select name="size" value={formData.size} onChange={handleChange}>
-              <option value="">Toutes</option>
               <option value="XS">XS</option>
               <option value="S">S</option>
               <option value="M">M</option>
@@ -89,7 +87,6 @@ const CreateArticle = () => {
           <label>
             Genre :
             <select name="gender" value={formData.gender} onChange={handleChange}>
-              <option value="">Tous</option>
               <option value="Femme">Femme</option>
               <option value="Homme">Homme</option>
               <option value="Unisex">Unisexe</option>
@@ -101,7 +98,6 @@ const CreateArticle = () => {
           <label>
             État :
             <select name="state" value={formData.state} onChange={handleChange}>
-              <option value="">Tous</option>
               <option value="Neuf">Neuf</option>
               <option value="Comme Neuf">Comme Neuf</option>
               <option value="Très bon état">Très bon état</option>
