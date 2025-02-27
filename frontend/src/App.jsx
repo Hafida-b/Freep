@@ -1,16 +1,19 @@
+import { AuthProvider } from "./auth";
+import Login from "./login";
 import { useState } from "react";
 import "./App.css";
 import CreateArticle from "./CreateArticle";
+import ArticleList from "./ArticleList";
 import SignUpForm from "./SignUp";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <CreateArticle />
+    <AuthProvider>
       <SignUpForm />
-    </>
+      <Login />
+      <CreateArticle />
+      <ArticleList />
+    </AuthProvider>
   );
 }
 
