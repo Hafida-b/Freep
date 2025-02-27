@@ -123,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = "freepapp.User"
+AUTH_USER_MODEL = 'freepapp.User'
 
 
 # Internationalization
