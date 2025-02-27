@@ -9,9 +9,10 @@ import "./App.css";
 
 function App() {
   return (
+    
     <AuthProvider>
       <Router>
-        <Navigation />
+      <Navigation />
         <Routes>
           <Route path="/" element={<ArticleList />} />
           <Route path="/signup" element={<SignUpForm />} />

@@ -103,7 +103,7 @@ class Clothing(models.Model):
     genders = models.CharField(max_length=50, choices=GENDER_CHOICES, blank=True, null=True)
     state = models.CharField(max_length=50, choices=STATE_CHOICES,blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="dressing", blank=True, null=True)
-    
+
 
     def __str__(self):
         return self.name if self.name else f"Vêtement #{self.id}"

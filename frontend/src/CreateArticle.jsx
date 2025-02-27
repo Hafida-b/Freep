@@ -51,8 +51,10 @@ const CreateArticle = () => {
         <h2>Créer un nouvel article</h2>
         {message && <p>{message}</p>}
         <form onSubmit={handleSubmit}>
+          Nom :   
           <input type="text" name="name" placeholder="Nom" value={formData.name} onChange={handleChange} required />
           <br />
+          Description :   
           <input type="text" name="desc" placeholder="Description" value={formData.desc} onChange={handleChange} />
           <br />
           {/* <input type="text" name="type" placeholder="Type" value={formData.type} onChange={handleChange} /> */}
@@ -107,6 +109,7 @@ const CreateArticle = () => {
             </select>
           </label>
           <br />
+          Image : 
           <input type="text" name="image" placeholder="URL de l'image" value={formData.image} onChange={handleChange} /><br />
   
           <button type="submit">Créer l'article</button>
